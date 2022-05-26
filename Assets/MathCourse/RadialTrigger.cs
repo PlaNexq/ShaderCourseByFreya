@@ -18,15 +18,15 @@ public class RadialTrigger : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Handles.color = Color.green;
+        Handles.color = Color.red;
         Vector2 origin = transform.position;
         Vector2 target = targetTf.position;
 
         Vector2 originToTarget = target - origin;
-        float originToTargetMagnitude = Mathf.Sqrt((originToTarget.x * originToTarget.x) + (originToTarget.y * originToTarget.y));
-        if (originToTargetMagnitude <= radius)
+        float originToTargetMagnitude = (originToTarget.x * originToTarget.x) + (originToTarget.y * originToTarget.y);
+        if (originToTargetMagnitude <= radius * radius)
         {
-            Handles.color = Color.red;
+            Handles.color = Color.green;
         }
 
         Handles.DrawWireDisc(origin, Vector3.forward, radius);
