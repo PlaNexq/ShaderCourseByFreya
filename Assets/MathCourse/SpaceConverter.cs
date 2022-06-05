@@ -30,25 +30,48 @@ public class SpaceConverter : MonoBehaviour
 
         if (!displayWorldSpace)
         {
-
-
+            DisplayLocal();
             Gizmos.color = Color.black;
             Gizmos.DrawLine(localOriginInWorld, objPosition);
         }
         else
         {
+            DisplayInWorld();
             Gizmos.color = Color.black;
             Gizmos.DrawLine(Vector2.zero, objPosition);
         }
     }
-    private Vector2 LocalToWorld(Vector2 localOriginPointInWorld, Vector2 localPos)
+    private Vector2 LocalToWorld(Vector2 localOriginInWorld, Vector2 localPos)
     {
         return Vector2.zero;
     }
 
-    private Vector2 WorldToLocal(Vector2 localOriginPointInWorld, Vector2 worldPos)
+    private Vector2 WorldToLocal(Vector2 localOriginInWorld, Vector2 worldPos)
     {
-        return Vector2.zero;
+        Vector2 newPos = localOriginInWorld + worldPos;
+        return newPos;
     }
 
+    private bool displayed = true;
+    public void DisplayInWorld()
+    {
+        if (displayed == true)
+            return;
+        displayed = true;
+
+        Vector2 localOriginInWorld = localSpaceTf.position;
+        Vector2 objPosition = objTf.position;
+        objTf.position = WorldToLocal(localOriginInWorld, objPosition);
+    }
+    public void DisplayLocal()
+    {
+        if (displayed == false)
+            return;
+        displayed = false;
+
+        Vector2 localOriginInWorld = localSpaceTf.position;
+        Vector2 objPosition = objTf.position;
+        objTf.position = LocalToWorld(localOriginInWorld, objPosition);
+        return;
+    }
 }
